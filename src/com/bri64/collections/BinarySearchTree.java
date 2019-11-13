@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
 public class BinarySearchTree<T extends Comparable<T>> {
-    private TreeNode<T> root = null;
+    protected TreeNode<T> root = null;
 
     public BinarySearchTree() {}
 

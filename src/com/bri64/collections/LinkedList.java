@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
 public class LinkedList<T> implements Iterable<T> {
-    private ListNode<T> head = null;
+    protected ListNode<T> head = null;
 
     ListNode<T> getHead() {
         return head;

@@ -1,8 +1,9 @@
 package com.bri64.collections;
 
+@SuppressWarnings("WeakerAccess")
 public class HashMap<K,V> {
-    LinkedSet<K> keys = new LinkedSet<>();
-    LinkedList<MapNode<V>> values = new LinkedList<>();
+    protected LinkedSet<K> keys = new LinkedSet<>();
+    protected LinkedList<MapNode<V>> values = new LinkedList<>();
 
     public HashMap() {}
 
