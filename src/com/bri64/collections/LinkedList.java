@@ -107,7 +107,7 @@ public class LinkedList<T> implements Iterable<T> {
         return remove(index);
     }
 
-    public List<ListNode<T>> asNodeList() {
+    List<ListNode<T>> asNodeList() {
         return (!isEmpty()) ? head.nodeList(new java.util.LinkedList<>()) : new java.util.LinkedList<>();
     }
 
