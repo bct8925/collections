@@ -1,5 +1,6 @@
 package com.bri64.collections;
 
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
@@ -87,5 +88,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return "[" + inOrder().asList().stream()
                 .map(T::toString)
                 .collect(Collectors.joining(", ")) + "]";
+    }
+
+    static void setRAND(Random rand) {
+        TreeNode.RAND = rand;
     }
 }

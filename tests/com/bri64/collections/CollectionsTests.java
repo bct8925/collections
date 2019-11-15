@@ -2,6 +2,7 @@ package com.bri64.collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ class CollectionsTests {
 
     @BeforeEach
     void setRandomMock() {
-        Utils.setRAND(new RandomMock());
+        BinarySearchTree.setRAND(new RandomMock());
     }
 
     @Test

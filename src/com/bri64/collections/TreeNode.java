@@ -1,10 +1,10 @@
 package com.bri64.collections;
 
-import java.util.List;
-
-import static com.bri64.collections.Utils.RAND;
+import java.util.Random;
 
 class TreeNode<T extends Comparable<T>> {
+    static Random RAND = new Random();
+
     private T value;
     private TreeNode<T> left = null;
     private TreeNode<T> right = null;
@@ -59,7 +59,7 @@ class TreeNode<T extends Comparable<T>> {
             if (left == null) return right;
             if (right == null) return left;
 
-            if (RAND().nextBoolean()) {
+            if (RAND.nextBoolean()) {
                 T rightMin = right.minValue();
                 right = right.remove(rightMin);
                 this.value = rightMin;
