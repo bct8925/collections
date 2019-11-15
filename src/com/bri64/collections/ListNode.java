@@ -2,7 +2,7 @@ package com.bri64.collections;
 
 import java.util.List;
 
-public class ListNode<T> {
+class ListNode<T> {
     private T value;
     private ListNode<T> next = null;
 
@@ -60,10 +60,5 @@ public class ListNode<T> {
         traversal.add(this);
         if (next != null) next.nodeList(traversal);
         return traversal;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
     }
 }

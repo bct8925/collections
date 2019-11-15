@@ -11,6 +11,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
     public BinarySearchTree(T root) {
         insert(root);
     }
+
+    public BinarySearchTree(BinarySearchTree<T> bst) {
+        this(bst.inOrder());
+    }
+
+    public BinarySearchTree(Iterable<T> c) {
+        insertAll(c);
+    }
     
     public boolean isEmpty() {
         return root == null;
@@ -32,12 +40,22 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
+    public void insertAll(Iterable<T> c) {
+        for (T value : c) {
+            insert(value);
+        }
+    }
+
     public boolean contains(T value) {
         return !isEmpty() && root.contains(value);
     }
 
     public void remove(T value) {
         if (!isEmpty()) root = root.remove(value);
+    }
+
+    public void clear() {
+        root = null;
     }
 
     public LinkedList<T> inOrder() {
@@ -50,6 +68,18 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public LinkedList<T> postOrder() {
         return (!isEmpty()) ? root.postOrder(new LinkedList<>()) : new LinkedList<>();
+    }
+
+    public BinarySearchTree<T> copy() {
+        return new BinarySearchTree<>(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BinarySearchTree<?> that = (BinarySearchTree<?>) o;
+        return this.inOrder().equals(that.inOrder());
     }
 
     @Override

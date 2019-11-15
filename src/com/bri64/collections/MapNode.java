@@ -1,15 +1,21 @@
 package com.bri64.collections;
 
-public class MapNode<V> {
-    Integer hash;
-    V value;
+class MapNode<K,V> {
+    private K key;
+    private V value;
+    private Integer hash;
 
-    public MapNode(V value) {
+    MapNode(K key, V value) {
+        this.key = key;
         this.value = value;
-        this.hash = value.hashCode();
+        this.hash = key.hashCode();
     }
 
-    public V getValue() {
+    K getKey() {
+        return key;
+    }
+
+    V getValue() {
         return value;
     }
 

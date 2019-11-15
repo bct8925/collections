@@ -14,10 +14,6 @@ public class LinkedList<T> implements Iterable<T> {
 
     public LinkedList() {}
 
-    public LinkedList(T head) {
-        push(head);
-    }
-
     public LinkedList(Iterable<T> c) {
         pushAll(c);
     }
@@ -107,18 +103,25 @@ public class LinkedList<T> implements Iterable<T> {
         return remove(index);
     }
 
-    List<ListNode<T>> asNodeList() {
-        return (!isEmpty()) ? head.nodeList(new java.util.LinkedList<>()) : new java.util.LinkedList<>();
+    public List<T> asList() {
+        return (!isEmpty()) ? head.nodeList(new java.util.LinkedList<>()).stream().map(ListNode::getValue).collect(Collectors.toList()) : new java.util.LinkedList<>();
     }
 
-    public List<T> asList() {
-        return (!isEmpty()) ? asNodeList().stream().map(ListNode::getValue).collect(Collectors.toList()) : new java.util.LinkedList<>();
+    public LinkedList<T> copy() {
+        return new LinkedList<>(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        LinkedList<?> that = (LinkedList<?>) o;
+        return this.asList().equals(that.asList());
     }
 
     @Override
     public String toString() {
-        return "[" + asNodeList().stream()
-                .map(ListNode::getValue)
+        return "[" + asList().stream()
                 .map(T::toString)
                 .collect(Collectors.joining(", ")) + "]";
     }

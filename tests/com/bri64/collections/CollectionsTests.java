@@ -16,15 +16,7 @@ class CollectionsTests {
 
     @Test
     void test_LinkedList() {
-        LinkedList<Integer> list = new LinkedList<>(7);
-
-        assertEquals(1, list.size(), "List size should be 1");
-
-        list.clear();
-
-        assertEquals(0, list.size(), "List should have been cleared");
-
-        list = new LinkedList<>();
+        LinkedList<Integer> list = new LinkedList<>();
 
         assertTrue(list.isEmpty(), "List should be empty");
         assertEquals(0, list.size(), "List size should be 0");
@@ -49,7 +41,7 @@ class CollectionsTests {
         assertEquals(1, list.get(0), "Index 0 should be 1");
         assertEquals("[1, 2, 2, 3, 4, 5, 6, 7]", list.toString(), "List is not correct");
 
-        list.removeFirst(2);
+        assertEquals(2, list.removeFirst(2), "Removed element should be 2");
         assertTrue(list.contains(2), "List should still contain 2");
 
         assertEquals(1, list.pop(), "Popped element should be 1");
@@ -65,33 +57,46 @@ class CollectionsTests {
             i++;
         }
 
+        LinkedList<Integer> list2 = list.copy();
+
+        assertEquals(list, list2, "Copied List should be equal");
+
+        list.clear();
+
+        assertEquals(0, list.size(), "List should have been cleared");
+    }
+
+    @Test
+    void test_LinkedList_compat() {
         List<Integer> test = List.of(1,2,3);
 
         assertEquals(test, new LinkedList<>(test).asList(), "List created from Java List should be equal");
-
-        assertEquals("2", list.asNodeList().get(0).toString(), "First node string should be \"2\"");
     }
 
     @Test
     void test_LinkedSet() {
-        LinkedList<Integer> list = new LinkedSet<>();
+        LinkedSet<Integer> set = new LinkedSet<>();
 
-        assertTrue(list.isEmpty(), "Set should be empty");
+        assertTrue(set.isEmpty(), "Set should be empty");
 
-        list = new LinkedSet<>(1);
+        set.push(1);
+        set.unshift(1);
+        set.push(2);
+        set.push(2);
+        set.push(3);
 
-        list.unshift(1);
-        list.push(2);
-        list.push(2);
-        list.push(3);
+        assertEquals("[1, 2, 3]", set.toString(), "Set is not correct");
 
-        assertEquals("[1, 2, 3]", list.toString(), "Set is not correct");
+        LinkedSet<Integer> set2 = set.copy();
 
+        assertEquals(set, set2, "Copied Set should be equal");
+    }
+
+    @Test
+    void test_LinkedSet_compat() {
         Set<Integer> test = Set.of(1,2,3);
 
         assertEquals(test, new LinkedSet<>(test).asSet(), "Set created from Java Set should be equal");
-
-        assertEquals("1", list.asNodeList().get(0).toString(), "First node string should be \"1\"");
     }
 
     @Test
@@ -127,7 +132,13 @@ class CollectionsTests {
         assertFalse(bst.contains(6), "BST should not contain 6");
         assertEquals("[1, 3, 4, 5, 7]", bst.toString(), "InOrder is not correct");
 
-        assertEquals("4", bst.getRootNode().toString(), "Root node string should be \"4\"");
+        BinarySearchTree<Integer> bst2 = bst.copy();
+
+        assertEquals(bst, bst2, "Copied BST should be equal");
+
+        bst.clear();
+
+        assertTrue(bst.isEmpty(), "BST should have been cleared");
     }
 
     @Test

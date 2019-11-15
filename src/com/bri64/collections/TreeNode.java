@@ -4,7 +4,7 @@ import java.util.List;
 
 import static com.bri64.collections.Utils.RAND;
 
-public class TreeNode<T extends Comparable<T>> {
+class TreeNode<T extends Comparable<T>> {
     private T value;
     private TreeNode<T> left = null;
     private TreeNode<T> right = null;
@@ -99,10 +99,5 @@ public class TreeNode<T extends Comparable<T>> {
         if (right != null) right.postOrder(traversal);
         traversal.push(value);
         return traversal;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
     }
 }

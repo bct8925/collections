@@ -9,10 +9,7 @@ public class LinkedSet<T> extends LinkedList<T> {
         super();
     }
 
-    public LinkedSet(T head) {
-        super(head);
-    }
-
+    // TODO make sure this uses LinkedSet.push()
     public LinkedSet(Iterable<T> c) {
         super(c);
     }
@@ -29,5 +26,9 @@ public class LinkedSet<T> extends LinkedList<T> {
 
     public Set<T> asSet() {
         return new HashSet<>(asList());
+    }
+
+    public LinkedSet<T> copy() {
+        return new LinkedSet<>(this);
     }
 }
