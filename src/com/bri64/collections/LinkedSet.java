@@ -9,7 +9,6 @@ public class LinkedSet<T> extends LinkedList<T> {
         super();
     }
 
-    // TODO make sure this uses LinkedSet.push()
     public LinkedSet(Iterable<T> c) {
         super(c);
     }
