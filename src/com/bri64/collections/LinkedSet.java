@@ -1,7 +1,7 @@
 package com.bri64.collections;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
 public class LinkedSet<T> extends LinkedList<T> {
@@ -23,11 +23,11 @@ public class LinkedSet<T> extends LinkedList<T> {
         if (!contains(value)) super.unshift(value);
     }
 
-    public Set<T> asSet() {
-        return new HashSet<>(asList());
-    }
-
     public LinkedSet<T> copy() {
         return new LinkedSet<>(this);
+    }
+
+    public Set<T> asSet() {
+        return stream().collect(Collectors.toSet());
     }
 }

@@ -2,7 +2,8 @@ package com.bri64.collections;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @SuppressWarnings("WeakerAccess")
 public class LinkedList<T> implements Iterable<T> {
@@ -99,16 +100,37 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     public T removeFirst(T value) {
-        int index = indexOf(value);
-        return remove(index);
+        return remove(indexOf(value));
     }
 
-    public List<T> asList() {
-        return (!isEmpty()) ? head.nodeList(new java.util.LinkedList<>()).stream().map(ListNode::getValue).collect(Collectors.toList()) : new java.util.LinkedList<>();
+    public LinkedList<T> reverse() {
+        LinkedList<T> reversed = new LinkedList<>();
+        for (T value : this) {
+            reversed.unshift(value);
+        }
+        return reversed;
     }
 
     public LinkedList<T> copy() {
         return new LinkedList<>(this);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator<>(this);
+    }
+
+    public Stream<T> stream() {
+        return StreamSupport.stream(spliterator(), false);
+    }
+
+    public List<T> asList() {
+        return stream().collect(java.util.stream.Collectors.toList());
+    }
+
+    // May throw exception if T does not implement Comparable<T>
+    public LinkedList<T> sort() {
+        return stream().sorted().collect(Collectors.toList());
     }
 
     @Override
@@ -121,13 +143,8 @@ public class LinkedList<T> implements Iterable<T> {
 
     @Override
     public String toString() {
-        return "[" + asList().stream()
+        return "[" + stream()
                 .map(T::toString)
-                .collect(Collectors.joining(", ")) + "]";
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new LinkedListIterator<>(this);
+                .collect(java.util.stream.Collectors.joining(", ")) + "]";
     }
 }

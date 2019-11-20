@@ -1,7 +1,5 @@
 package com.bri64.collections;
 
-import java.util.List;
-
 class ListNode<T> {
     private T value;
     private ListNode<T> next = null;
@@ -54,11 +52,5 @@ class ListNode<T> {
 
     ListNode<T> peekLast() {
         return (next != null) ? next.peekLast() : this;
-    }
-
-    List<ListNode<T>> nodeList(List<ListNode<T>> traversal) {
-        traversal.add(this);
-        if (next != null) next.nodeList(traversal);
-        return traversal;
     }
 }

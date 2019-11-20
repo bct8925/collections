@@ -3,10 +3,10 @@ package com.bri64.collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CollectionsTests {
 
@@ -51,6 +51,22 @@ class CollectionsTests {
         assertFalse(list.contains(7), "List should no longer contain 7");
 
         assertEquals("[2, 3, 4, 5, 6]", list.toString(), "List is not correct");
+
+        list = list.reverse();
+
+        assertEquals("[6, 5, 4, 3, 2]", list.toString(), "List is not correct");
+
+        list = list.stream().parallel().map((i) -> i+1).collect(Collectors.toList());
+
+        assertEquals("[7, 6, 5, 4, 3]", list.toString(), "List is not correct");
+
+        list = list.sort();
+
+        assertEquals("[3, 4, 5, 6, 7]", list.toString(), "List is not correct");
+
+        /*int sum = list.stream().reduce((i) -> i+1).collect(Collectors.toList());
+
+        assertEquals("[7, 6, 5, 4, 3]", list.toString(), "List is not correct");*/
 
         int i = 0;
         for (Integer value : list) {
