@@ -9,10 +9,6 @@ import java.util.stream.StreamSupport;
 public class LinkedList<T> implements Iterable<T> {
     protected ListNode<T> head = null;
 
-    ListNode<T> getHead() {
-        return head;
-    }
-
     public LinkedList() {}
 
     public LinkedList(Iterable<T> c) {
@@ -33,6 +29,13 @@ public class LinkedList<T> implements Iterable<T> {
     
     public boolean contains(T value) {
         return indexOf(value) != -1;
+    }
+
+    public boolean containsAll(Iterable<T> values) {
+        for (T value : values) {
+            if (!contains(value)) return false;
+        }
+        return true;
     }
 
     public T peek() {
@@ -146,5 +149,25 @@ public class LinkedList<T> implements Iterable<T> {
         return "[" + stream()
                 .map(T::toString)
                 .collect(java.util.stream.Collectors.joining(", ")) + "]";
+    }
+
+    private static class LinkedListIterator<T> implements Iterator<T> {
+        private ListNode<T> cursor;
+
+        LinkedListIterator(LinkedList<T> list) {
+            this.cursor = (list != null) ? list.head : null;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cursor != null;
+        }
+
+        @Override
+        public T next() {
+            T value = cursor.getValue();
+            cursor = cursor.getNext();
+            return value;
+        }
     }
 }

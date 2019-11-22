@@ -64,9 +64,7 @@ class CollectionsTests {
 
         assertEquals("[3, 4, 5, 6, 7]", list.toString(), "List is not correct");
 
-        /*int sum = list.stream().reduce((i) -> i+1).collect(Collectors.toList());
-
-        assertEquals("[7, 6, 5, 4, 3]", list.toString(), "List is not correct");*/
+        assertTrue(list.containsAll(List.of(6,5,4)), "List should contain 4, 5, and 6");
 
         int i = 0;
         for (Integer value : list) {
