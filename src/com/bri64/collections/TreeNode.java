@@ -6,11 +6,18 @@ class TreeNode<T extends Comparable<T>> {
     static Random RAND = new Random();
 
     private T value;
+    private TreeNode<T> parent;
     private TreeNode<T> left = null;
     private TreeNode<T> right = null;
+    private NodeColor color = NodeColor.RED;
 
-    TreeNode(T value) {
+    TreeNode(TreeNode<T> parent, T value) {
+        this.parent = parent;
         this.value = value;
+
+        if (parent == null) {
+            this.color = NodeColor.BLACK;
+        }
     }
 
     T getValue() {
@@ -28,13 +35,15 @@ class TreeNode<T extends Comparable<T>> {
     void insert(T value) {
         if (value.compareTo(this.value) <= 0) {
             if (left == null) {
-                left = new TreeNode<>(value);
+                left = new TreeNode<>(this, value);
+                left.repairTree();
             } else {
                 left.insert(value);
             }
         } else {
             if (right == null) {
-                right = new TreeNode<>(value);
+                right = new TreeNode<>(this, value);
+                right.repairTree();
             } else {
                 right.insert(value);
             }
@@ -99,5 +108,129 @@ class TreeNode<T extends Comparable<T>> {
         if (right != null) right.postOrder(traversal);
         traversal.push(value);
         return traversal;
+    }
+
+    public enum NodeColor {
+        RED, BLACK
+    }
+
+    NodeColor getColor() {
+        return color;
+    }
+
+    private TreeNode<T> getParent() {
+        return parent;
+    }
+
+    TreeNode<T> getRoot() {
+        return (getParent() == null) ? this : getParent().getRoot();
+    }
+
+    private TreeNode<T> getSibling() {
+        if (getParent() == null) {
+            return null;
+        }
+        return (getParent().left == this) ? getParent().right : getParent().left;
+    }
+
+    private TreeNode<T> getUncle() {
+        return (getParent() == null) ? null : getParent().getSibling();
+    }
+
+    private TreeNode<T> getGrandparent() {
+        return (getParent() == null) ? null : getParent().getParent();
+    }
+
+    private void repairTree() {
+        TreeNode<T> p = getParent();
+        TreeNode<T> g = getGrandparent();
+        TreeNode<T> u = getUncle();
+
+        if (p == null) {
+            color = NodeColor.BLACK;
+        } else if (p.getColor() == NodeColor.BLACK) {
+            color = getColor();
+        } else if (u != null && u.getColor() == NodeColor.RED) {
+            p.color = NodeColor.BLACK;
+            u.color = NodeColor.BLACK;
+            g.color = NodeColor.RED;
+            g.repairTree();
+        } else {
+            TreeNode<T> n = this;
+            if (n == p.right && p == g.left) {
+                p.rotateLeft();
+                n = n.left;
+            } else if (n == p.left && p == g.right) {
+                p.rotateRight();
+                n = n.right;
+            }
+            n.repairTree2();
+        }
+    }
+
+    private void repairTree2() {
+        TreeNode<T> p = getParent();
+        TreeNode<T> g = getGrandparent();
+
+        if (this == p.left) {
+            g.rotateRight();
+        } else {
+            g.rotateLeft();
+        }
+
+        p.color = NodeColor.BLACK;
+        g.color = NodeColor.RED;
+    }
+
+    private void rotateLeft() {
+        TreeNode<T> n = this;
+        TreeNode<T> nnew = n.right;
+        TreeNode<T> p = n.getParent();
+        if (nnew == null) {
+            return;
+        }
+
+        n.right = nnew.left;
+        nnew.left = n;
+        n.parent = nnew;
+
+        if (n.right != null) {
+            n.right.parent = n;
+        }
+
+        if (p != null) {
+            if (n == p.left) {
+                p.left = nnew;
+            } else if (n == p.right) {
+                p.right = nnew;
+            }
+        }
+        nnew.parent = p;
+    }
+
+    private void rotateRight() {
+        TreeNode<T> n = this;
+        TreeNode<T> nnew = n.left;
+        TreeNode<T> p = n.getParent();
+        if (nnew == null) {
+            return;
+        }
+
+        n.left = nnew.right;
+        nnew.right = n;
+        n.parent = nnew;
+
+        if (n.left != null) {
+            n.left.parent = n;
+        }
+
+        if (p != null) {
+            if (n == p.left) {
+                p.left = nnew;
+            } else if (n == p.right) {
+                p.right = nnew;
+            }
+        }
+        nnew.parent = p;
     }
 }

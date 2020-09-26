@@ -35,9 +35,10 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public void insert(T value) {
         if (isEmpty()) {
-            root = new TreeNode<>(value);
+            root = new TreeNode<>(null, value);
         } else {
             root.insert(value);
+            root = root.getRoot();
         }
     }
 

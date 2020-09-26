@@ -129,16 +129,17 @@ class CollectionsTests {
         bst.insert(5);
         bst.insert(7);
 
+        // Updated for RBT
         assertFalse(bst.isEmpty(), "BST should no longer be empty");
-        assertEquals(4, bst.getRoot(), "Root should be 4");
-        assertEquals(4, bst.getRootNode().getValue(), "Root node's value should be 4");
+        assertEquals(3, bst.getRoot(), "Root should be 3");
+        assertEquals(3, bst.getRootNode().getValue(), "Root node's value should be 3");
         assertEquals(2, bst.getRootNode().getLeft().getValue(), "Left of root should be 2");
-        assertEquals(6, bst.getRootNode().getRight().getValue(), "Left of root should be 6");
-        assertTrue(bst.contains(5), "BST should contain 5");
+        assertEquals(5, bst.getRootNode().getRight().getValue(), "Right of root should be 5");
+        assertTrue(bst.contains(7), "BST should contain 7");
 
         assertEquals("[1, 2, 3, 4, 5, 6, 7]", bst.inOrder().toString(), "InOrder is not correct");
-        assertEquals("[4, 2, 1, 3, 6, 5, 7]", bst.preOrder().toString(), "PreOrder is not correct");
-        assertEquals("[1, 3, 2, 5, 7, 6, 4]", bst.postOrder().toString(), "PostOrder is not correct");
+        assertEquals("[3, 2, 1, 5, 4, 6, 7]", bst.preOrder().toString(), "PreOrder is not correct");
+        assertEquals("[1, 2, 4, 7, 6, 5, 3]", bst.postOrder().toString(), "PostOrder is not correct");
 
         bst.remove(2);
         bst.remove(6);
